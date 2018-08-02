@@ -1,7 +1,7 @@
 {
   "name": "trace-context",
   "version": "1.0.0",
-  "description": "Parser for the W3C Trace-Context headers",
+  "description": "Parser / serializer for the formats defined in the W3C TraceContext specification",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc --outDir dist -p .",
