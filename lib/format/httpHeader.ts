@@ -22,7 +22,8 @@ interface PartialTraceContext {
   options: number;
 }
 
-export type getHeader = (headerName: string) => string;
+export type getHeader = (name: string) => string;
+export type setHeader = (name: string, value: string) => void;
 
 export function extract(headerGetter: getHeader): TraceContext | null {
   const traceParent = parseTraceParent(headerGetter(traceParentHeaderName));
@@ -81,7 +82,6 @@ function parseTraceParent(s: string): PartialTraceContext | null {
 function parseTraceState(s: string): InternalTraceState | null {
   if (
     s == null ||
-    // If the length of a combined header is more than 512 bytes it SHOULD be ignored.
     s.length > maximumTraceStateLength
   ) {
     return null;
@@ -97,4 +97,25 @@ function parseTraceState(s: string): InternalTraceState | null {
     return agg;
   }, {});
   return states;
+}
+
+export function inject(headerSetter: setHeader, ctx: TraceContext) {
+  const version = zeroLeftPad(ctx.version.toString(16), 2);
+  const traceId = zeroLeftPad(ctx.traceId, 32);
+  const spanId = zeroLeftPad(ctx.spanId, 16);
+  const options = zeroLeftPad(ctx.options.toString(16), 2);
+  const traceParent = `${version}-${traceId}-${spanId}-${options}`;
+  headerSetter(traceParentHeaderName, traceParent);
+  
+  const traceSearch = ctx.state.keys()
+    .reduce((agg: Array<String>, key) => {
+      agg.push(`${key}=${ctx.state.get(key)}`);
+      return agg;
+    }, []).join(',');
+  headerSetter(traceStateHeaderName, traceSearch);
+}
+
+const zeros = '00000000000000000000000000000000'
+function zeroLeftPad(str: string, width: number): string {
+  return zeros.slice(0, Math.max(0, width - str.length)) + str;
 }

@@ -7,7 +7,11 @@ export class TraceState {
     this.internalState = internalState;
   }
 
-  get(name: string): string | null {
+  keys() {
+    return Object.keys(this.internalState);
+  }
+
+  get(name: string): string {
     return this.internalState[name];
   }
 }
