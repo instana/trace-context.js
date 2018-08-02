@@ -1,12 +1,13 @@
 {
   "name": "trace-context",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Parser / serializer for the formats defined in the W3C TraceContext specification",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc --outDir dist -p .",
     "test": "jest --coverage --coverageDirectory coverage",
-    "test:watch": "jest --coverage --coverageDirectory coverage --watch lib"
+    "test:watch": "jest --coverage --coverageDirectory coverage --watch lib",
+    "prepublish": "npm run build"
   },
   "files": [
     "lib",
