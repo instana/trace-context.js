@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.2
  - Parse trace state headers which contain a `=` character.
 
 ## 1.0.1
