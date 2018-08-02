@@ -1,0 +1,14 @@
+{
+  "name": "trace-context",
+  "version": "1.0.0",
+  "description": "Parser for the W3C Trace-Context headers",
+  "main": "dist/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben Ripkens",
+  "license": "MIT"
+}
