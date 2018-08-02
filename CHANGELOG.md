@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.3
+ - Trace state headers which contain a `=` character will drop the `=` value.
+
 ## 1.0.2
  - Parse trace state headers which contain a `=` character.
 

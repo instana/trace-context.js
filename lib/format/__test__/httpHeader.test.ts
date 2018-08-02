@@ -112,7 +112,7 @@ describe('format/httpHeader', () => {
         expect(ctx).not.toEqual(null);
 
         if (ctx != null) {
-          expect(ctx.state.get('a')).toEqual('1');
+          expect(ctx.state.get('a')).toEqual('1=');
         }
       });
 
