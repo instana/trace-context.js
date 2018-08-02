@@ -105,6 +105,17 @@ describe('format/httpHeader', () => {
         }
       });
 
+      it('must parse states that only have a single value with an equal sign', () => {
+        const headers = getValidHeaders();
+        headers.tracestate = 'a=1='
+        const ctx = extract(k => headers[k]);
+        expect(ctx).not.toEqual(null);
+
+        if (ctx != null) {
+          expect(ctx.state.get('a')).toEqual('1');
+        }
+      });
+
       function testFailingParse(headerValue: string | null) {
         const headers = getValidHeaders();
         if (headerValue == null) {

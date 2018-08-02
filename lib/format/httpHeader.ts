@@ -89,7 +89,7 @@ function parseTraceState(s: string): InternalTraceState | null {
 
   // TODO validate maximum number of items
   var states = s.split(',').reduce(function(agg: InternalTraceState, part: string) {
-    var parts = part.split('=');
+    var parts = part.split('=', 2);
     if (parts.length === 2) {
       // TODO validate key/value constraints defined in the spec
       agg[parts[0].trim()] = parts[1].trim();
