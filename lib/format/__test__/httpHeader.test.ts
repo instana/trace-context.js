@@ -1,3 +1,5 @@
+import {range} from 'lodash';
+
 import {TraceState, InternalTraceState} from '../../TraceState';
 import {TraceContext} from '../../TraceContext';
 import { getHeader, extract } from '../httpHeader';
@@ -77,12 +79,41 @@ describe('format/httpHeader', () => {
   });
 
   describe('tracestate parsing', () => {
-    it('must fail on missing tracestate header', () => {
+    it('must fail on missing header', () => {
+      testFailingParse(null);
+    });
+
+    it('must fail when the header is too long', () => {
+      testFailingParse('a=' + range(510).map(() => 'b'));
+    });
+
+    it('must drop states which cannot be parsed', () => {
       const headers = getValidHeaders();
-      delete headers.tracestate;
+      headers.tracestate = 'a=1,b,c=3'
+      const ctx = extract(k => headers[k]);
+      expect(ctx).not.toEqual(null);
+
+      if (ctx != null) {
+        expect(ctx.version).toEqual(0);
+        expect(ctx.traceId).toEqual('4bf92f3577b34da6a3ce929d0e0e4736');
+        expect(ctx.spanId).toEqual('00f067aa0ba902b7');
+        expect(ctx.options).toEqual(1);
+        expect(ctx.state.get('a')).toEqual('1');
+        expect(ctx.state.get('b')).toEqual(undefined);
+        expect(ctx.state.get('c')).toEqual('3');
+      }
+    });
+
+    function testFailingParse(headerValue: string | null) {
+      const headers = getValidHeaders();
+      if (headerValue == null) {
+        delete headers.tracestate;
+      } else {
+        headers.tracestate = headerValue;
+      }
       const ctx = extract(k => headers[k]);
       expect(ctx).toEqual(null);
-    });
+    }
   });
 });
 

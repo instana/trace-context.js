@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc --outDir dist -p .",
-    "test": "jest --coverage --coverageDirectory coverage"
+    "test": "jest --coverage --coverageDirectory coverage",
+    "test:watch": "jest --coverage --coverageDirectory coverage --watch lib"
   },
   "files": [
     "lib",
@@ -15,7 +16,9 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^23.3.1",
+    "@types/lodash": "^4.14.115",
     "jest": "^23.4.2",
+    "lodash": "^4.17.10",
     "ts-jest": "^23.0.1",
     "typescript": "^3.0.1"
   },
