@@ -1,6 +1,6 @@
 {
   "name": "trace-context",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Parser / serializer for the formats defined in the W3C TraceContext specification",
   "main": "dist/index.js",
   "scripts": {
