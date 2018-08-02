@@ -100,19 +100,24 @@ function parseTraceState(s: string): InternalTraceState | null {
 }
 
 export function inject(headerSetter: setHeader, ctx: TraceContext) {
+  headerSetter(traceParentHeaderName, getTraceParentHttpHeader(ctx));
+  headerSetter(traceStateHeaderName, getTraceStateHttpHeader(ctx.state));
+}
+
+export function getTraceParentHttpHeader(ctx: TraceContext): string {
   const version = zeroLeftPad(ctx.version.toString(16), 2);
   const traceId = zeroLeftPad(ctx.traceId, 32);
   const spanId = zeroLeftPad(ctx.spanId, 16);
   const options = zeroLeftPad(ctx.options.toString(16), 2);
-  const traceParent = `${version}-${traceId}-${spanId}-${options}`;
-  headerSetter(traceParentHeaderName, traceParent);
-  
-  const traceSearch = ctx.state.keys()
+  return `${version}-${traceId}-${spanId}-${options}`;
+}
+
+export function getTraceStateHttpHeader(state: TraceState): string {
+  return state.keys()
     .reduce((agg: Array<String>, key) => {
-      agg.push(`${key}=${ctx.state.get(key)}`);
+      agg.push(`${key}=${state.get(key)}`);
       return agg;
     }, []).join(',');
-  headerSetter(traceStateHeaderName, traceSearch);
 }
 
 const zeros = '00000000000000000000000000000000'

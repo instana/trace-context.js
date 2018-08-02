@@ -6,4 +6,6 @@ export {
   extract as exactFromHttpHeaders,
   setHeader as setHttpHeader,
   inject as injectToHttpHeaders,
+  getTraceParentHttpHeader,
+  getTraceStateHttpHeader
 } from './format/httpHeader';

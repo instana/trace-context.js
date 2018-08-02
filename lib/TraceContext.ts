@@ -27,7 +27,25 @@ export class TraceContext {
     return this.isFlagSet(1);
   }
 
+  setTracedFlag() {
+    this.setFlag(1);
+  }
+
   isFlagSet(flag: number): boolean {
     return (this.options & flag) === flag;
-  };
+  }
+
+  setFlag(flag: number): void {
+    this.options = this.options | flag;
+  }
+
+  clone() {
+    return new TraceContext({
+      version: this.version,
+      traceId: this.traceId,
+      spanId: this.spanId,
+      options: this.options,
+      state: this.state.clone()
+    });
+  }
 }
