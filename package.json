@@ -3,12 +3,38 @@
   "version": "1.0.0",
   "description": "Parser for the W3C Trace-Context headers",
   "main": "dist/index.js",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf dist && tsc --outDir dist -p .",
+    "test": "jest --coverage --coverageDirectory coverage"
   },
+  "files": [
+    "lib",
+    "dist"
+  ],
   "author": "Ben Ripkens",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^23.3.1",
+    "jest": "^23.4.2",
+    "ts-jest": "^23.0.1",
+    "typescript": "^3.0.1"
+  },
+  "jest": {
+    "testURL": "http://localhost",
+    "globals": {
+      "ts-jest": {
+        "enableTsDiagnostics": true
+      }
+    },
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node"
+    ]
+  }
 }
