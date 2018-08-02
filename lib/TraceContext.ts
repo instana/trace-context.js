@@ -22,4 +22,12 @@ export class TraceContext {
     this.options = opts.options;
     this.state = opts.state;
   }
+
+  isTracedFlagSet() {
+    return this.isFlagSet(1);
+  }
+
+  isFlagSet(flag: number): boolean {
+    return (this.options & flag) === flag;
+  };
 }
