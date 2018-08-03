@@ -1,26 +1,23 @@
 import {TraceState} from './TraceState';
 
-export interface TraceContextOptions {
+export interface TraceParentOptions {
   version: number;
   traceId: string;
   spanId: string;
   options: number;
-  state: TraceState;
 }
 
-export class TraceContext {
+export class TraceParent {
   version: number;
   traceId: string;
   spanId: string;
   options: number;
-  state: TraceState;
 
-  constructor(opts: TraceContextOptions) {
+  constructor(opts: TraceParentOptions) {
     this.version = opts.version;
     this.traceId = opts.traceId;
     this.spanId = opts.spanId
     this.options = opts.options;
-    this.state = opts.state;
   }
 
   isTracedFlagSet() {
@@ -40,12 +37,11 @@ export class TraceContext {
   }
 
   clone() {
-    return new TraceContext({
+    return new TraceParent({
       version: this.version,
       traceId: this.traceId,
       spanId: this.spanId,
-      options: this.options,
-      state: this.state.clone()
+      options: this.options
     });
   }
 }

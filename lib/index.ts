@@ -1,11 +1,6 @@
-export {TraceContext} from './TraceContext';
+import * as httpInternal from './format/http';
+
+export {TraceParent} from './TraceParent';
 export {TraceState} from './TraceState';
 
-export {
-  getHeader as getHttpHeader,
-  extract as exactFromHttpHeaders,
-  setHeader as setHttpHeader,
-  inject as injectToHttpHeaders,
-  getTraceParentHttpHeader,
-  getTraceStateHttpHeader
-} from './format/httpHeader';
+export const http = httpInternal;
