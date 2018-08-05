@@ -46,4 +46,18 @@ describe('TraceParent', () => {
     const clone = input.clone();
     expect(clone).not.toBe(input);
   });
+
+  describe('random', () => {
+    it('must generate parents', () => {
+      const parent = TraceParent.random();
+      expect(parent.version).toEqual(0);
+      expect(parent.traceId.length).toEqual(32);
+      expect(parent.spanId.length).toEqual(16);
+      expect(parent.isTracedFlagSet()).toEqual(true);
+    });
+
+    it('must generate random parents', () => {
+      expect(TraceParent.random()).not.toEqual(TraceParent.random());
+    });
+  });
 });

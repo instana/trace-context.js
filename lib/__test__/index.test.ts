@@ -4,6 +4,9 @@ import * as api from '../index';
 describe('exposed API', () => {
   expectExposedFunction('TraceParent');
   expectExposedFunction('TraceState');
+  expectExposedFunction('randomTraceId');
+  expectExposedFunction('randomSpanId');
+  expectExposedFunction('TraceState');
   expectExposedFunction('http', 'extractTraceParent');
   expectExposedFunction('http', 'injectTraceParent');
   expectExposedFunction('http', 'parseTraceParent');

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.0
+ - Support generation of new TraceParent with random IDs.
+
 ## 2.0.0
  - Far reaching API changes to decouple `TraceParent` from `TraceState` information.
  - Expose more low level APIs to support only `TraceParent` or `TraceState` deserialization.

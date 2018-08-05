@@ -1,4 +1,6 @@
-import {TraceState} from './TraceState';
+import {randomSpanId, randomTraceId} from './ids';
+
+const tracedFlag = 0x1;
 
 export interface TraceParentOptions {
   version: number;
@@ -21,11 +23,11 @@ export class TraceParent {
   }
 
   isTracedFlagSet() {
-    return this.isFlagSet(1);
+    return this.isFlagSet(tracedFlag);
   }
 
   setTracedFlag() {
-    this.setFlag(1);
+    this.setFlag(tracedFlag);
   }
 
   isFlagSet(flag: number): boolean {
@@ -42,6 +44,15 @@ export class TraceParent {
       traceId: this.traceId,
       spanId: this.spanId,
       options: this.options
+    });
+  }
+
+  static random(): TraceParent {
+    return new TraceParent({
+      version: 0,
+      traceId: randomTraceId(),
+      spanId: randomSpanId(),
+      options: tracedFlag
     });
   }
 }
